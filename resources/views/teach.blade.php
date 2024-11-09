@@ -12,6 +12,7 @@
                 
                 
                     <h2>Available Skills</h2>
+                    <!--need to extract skills from database and display by category here-->
 
                 
 
@@ -24,6 +25,8 @@
                 
                 
                     <h2>Approved skills</h2>
+                    <!--Display approved skills the student can teach here-->
+
 
                 
 
