@@ -28,7 +28,7 @@ class CreateNewUser implements CreatesNewUsers
             // Custom domain validation, excluding admin email
         function ($attribute, $value, $fail) {
             $allowedEmail = 'admin@apiit.lk'; // admin's email adress domain isnt students.apiit.lk 
-            $domain = 'apiit.students.lk';
+            $domain = 'students.apiit.lk';
             
             if ($value !== $allowedEmail && !str_ends_with($value, "@$domain")) {
                 $fail("The $attribute must be an email address with the domain $domain.");
