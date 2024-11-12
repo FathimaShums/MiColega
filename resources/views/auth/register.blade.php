@@ -60,36 +60,37 @@
         @endif
 
        <!-- Availability Table -->
-<div class="container mt-4">
-    <h2 class="mb-4">{{ __('Select Available Times') }}</h2>
-    <table class="min-w-full table-auto border-collapse border border-gray-300">
-        <thead>
-            <tr class="bg-gray-200">
-                <th class="px-4 py-2 border border-gray-300">{{ __('Day') }}</th>
-                @foreach($timeSlots as $timeSlot)
-                    <th class="px-4 py-2 border border-gray-300">{{ $timeSlot }}</th>
-                @endforeach
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($availabilities->groupBy('date') as $date => $availabilityGroup)
-                <tr class="text-center">
-                    <td class="px-4 py-2 border border-gray-300">{{ $date }}</td>
+       <div class="container mt-4">
+        <h2 class="mb-4">{{ __('Select Available Times') }}</h2>
+        <table class="min-w-full table-auto border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 border border-gray-300">{{ __('Day') }}</th>
                     @foreach($timeSlots as $timeSlot)
+                        <th class="px-4 py-2 border border-gray-300">{{ $timeSlot }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($availabilities->groupBy('date') as $date => $availabilityGroup)
+                    <tr class="text-center">
+                        <td class="px-4 py-2 border border-gray-300">{{ $date }}</td>
+                        @foreach($timeSlots as $timeSlot)
                         <td class="px-4 py-2 border border-gray-300">
                             <input 
                                 type="checkbox" 
                                 name="availabilities[]" 
-                                value="{{ $availabilityGroup->first()->id . '-' . $timeSlot }}" 
-                                {{ old('availabilities') && in_array($availabilityGroup->first()->id . '-' . $timeSlot, old('availabilities')) ? 'checked' : '' }}
+                                value="{{ $availabilityGroup->first()->id }}" 
+                                {{ old('availabilities') && in_array($availabilityGroup->first()->id, old('availabilities')) ? 'checked' : '' }}
                             >
                         </td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    
 
 
         <div class="flex items-center justify-end mt-4">

@@ -59,8 +59,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', 'min:8'],
-            'availabilities' => ['required', 'array'], // Ensure that availabilities are selected
-            'availabilities.*' => ['exists:availabilities,id'], // Validate that each selected availability ID exists
+           'availabilities' => ['required', 'array'], // Ensure availabilities are selected
+        'availabilities.*' => ['exists:availabilities,id'], // Validate each ID existsts
         'skills' => ['required', 'array'], // Ensure that skills are selected
         'skills.*' => ['exists:skills,id'], // Validate that each selected skill ID exists
         ]);
@@ -79,8 +79,8 @@ class RegisterController extends Controller
             $user->roles()->attach($defaultRole->RoleID); // Use the appropriate RoleID
         }
 
-        // Attach the selected availabilities to the user (pivot table)
-        $user->availabilities()->attach($validated['availabilities']);
+        // Attach each availability ID to the user
+    $user->availabilities()->attach($validated['availabilities']);
 
         // Redirect to the intended page after registration
         return redirect()->route('dashboard');

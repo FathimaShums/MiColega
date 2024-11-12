@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('availabilities', function (Blueprint $table) {
-            
-            $table->string('date'); 
-            $table->time('time'); 
-
-            
+            $table->string('date');
+            $table->time('time');
         });
     }
 
@@ -25,9 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table->dropColumn('date','time');
-
-        
-
+        Schema::table('availabilities', function (Blueprint $table) {
+            $table->dropColumn(['date', 'time']);
+        });
     }
 };
