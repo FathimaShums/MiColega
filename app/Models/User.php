@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -27,10 +28,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    
     protected $fillable = [
         'name',
         'email',
         'password',
+        'google_token'
     ];
 
     /**
@@ -83,4 +86,12 @@ class User extends Authenticatable
      {
          return $this->roles->contains('name', $roleName);
      }
+     public function availabilities(): BelongsToMany
+     {
+         return $this->belongsToMany(Availability::class, 'availability_user', 'user_id', 'availability_id');
+     }
+     public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'skill_user', 'user_id', 'skill_id');
+    }
 }
