@@ -11,8 +11,35 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 
                 
-                    <h2>Available Skills</h2>
+                    <h2>Skills and Demand</h2>
                     <!--need to extract skills from database and display by category here-->
+                    <div class="container">
+                        <h1 class="text-2xl font-bold mb-4">Available Skills</h1>
+                        <table class="min-w-full bg-white border border-gray-300">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Skill Name</th>
+                                    <th class="py-2 px-4 border-b">Skill Description</th>
+                                    <th class="py-2 px-4 border-b">Demand</th>
+                                    <th class="py-2 px-4 border-b">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($skills as $skill)
+                                    <tr>
+                                        <td class="py-2 px-4 border-b">{{ $skill->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $skill->description }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $skill->users_count }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            <button class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600">
+                                                Teach Skill
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
                 
 
@@ -33,38 +60,5 @@
             </div>
         </div>
     </div>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-               <h2>Create a Course</h2>
-               <form action="" method="POST">  
-                @csrf
-                <label for="title">Course Title</label>
-                <input type="text" name="title" required>
-            
-                <label for="description">Course Description</label>
-                <textarea name="description"></textarea>
-            
-                <label for="skill_id">Skill</label>
-                qqqq
-            
-                <label for="start_time">Start Time</label>
-                <input type="datetime-local" name="start_time" required>
-            
-                <label for="duration">Duration (in minutes)</label>
-                <input type="number" name="duration" required>
-            
-                <label for="recurrence">Recurrence</label>
-                <select name="recurrence">
-                    <option value="">None</option>
-                    <option value="FREQ=DAILY">Daily</option>
-                    <option value="FREQ=WEEKLY;BYDAY=MO">Weekly on Monday</option>
-                    <option value="FREQ=MONTHLY">Monthly</option>
-                </select>
-            
-                <button type="submit">Create Course</button>
-            </form>
-            </div>
-        </div>
-    </div>
+    
 </x-app-layout>

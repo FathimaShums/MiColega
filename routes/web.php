@@ -14,6 +14,9 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 
+
+Route::get('/skills', [TeachController::class, 'showSkills'])->name('skills.show');
+
 // Default route for the welcome page
 Route::get('/', function () {
     return view('welcome');
