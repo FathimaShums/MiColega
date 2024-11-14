@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         })->name('dashboard');
         // Update the /teach route to use the TeachController
         Route::get('/teach', [TeachController::class, 'index'])->name('teach');
+        Route::post('/submit-skill-request', [TeachController::class, 'submitSkillRequest'])->name('submit.skill.request');
+
     });
 
 // Group admin-specific routes
