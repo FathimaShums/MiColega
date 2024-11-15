@@ -1,6 +1,7 @@
 <x-guest-layout>
     <x-slot name="logo">
-        <h1>Mi Colega</h1>
+        {{-- <h1>Mi Colega</h1> --}}
+        <img src="{{ asset('images/logoMiColega.jpeg') }}" alt="Logo" class="block h-12 w-auto" />
     </x-slot>
 
     <x-validation-errors class="mb-4" />

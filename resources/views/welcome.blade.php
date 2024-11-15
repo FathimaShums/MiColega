@@ -20,9 +20,10 @@
             <!-- Navigation Bar -->
             <nav class="bg-white shadow-md py-4">
                 <div class="container mx-auto flex justify-between items-center px-4">
-                    <div class="text-xl font-semibold text-gray-800">
+                    {{-- <div class="text-xl font-semibold text-gray-800">
                         MiColega
-                    </div>
+                    </div> --}}
+                    <img src="{{ asset('images/logoMiColega.jpeg') }}" alt="Logo" class="block h-12 w-auto" />
                     <div class="space-x-4">
                         <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-800">Log in</a>
                         <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800">Register</a>
