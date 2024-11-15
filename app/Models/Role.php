@@ -11,6 +11,8 @@ class Role extends Model
 
     // Define the table name (optional, as Laravel uses plural form by default)
     protected $table = 'roles';
+    // Specify the primary key for the 'roles' table
+    protected $primaryKey = 'RoleID';
 
     // Allow mass assignment on the 'RoleName' column (not 'name' anymore)
     protected $fillable = ['RoleName'];

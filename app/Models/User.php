@@ -76,16 +76,29 @@ class User extends Authenticatable
      }
  
      // Relationship to the Role model through UserRole
-     public function roles()
-     {
-         return $this->belongsToMany(Role::class, 'user_roles');
-     }
+    //  public function roles()
+    //  {
+    //      return $this->belongsToMany(Role::class, 'user_roles');
+    //  }
  
-     // Helper function to check if the user has a specific role
+    //  Helper function to check if the user has a specific role
      public function hasRole($roleName)
      {
-         return $this->roles->contains('name', $roleName);
+
+        // Load the roles if they are not already loaded
+    if ($this->roles->isEmpty()) {
+        $this->load('roles');
+    }
+    
+    // Check if the user has the role
+    return $this->roles->contains('RoleName', $roleName);
      }
+     
+    public function roles()
+{
+    return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+}
+
      public function availabilities(): BelongsToMany
      {
          return $this->belongsToMany(Availability::class, 'availability_user', 'user_id', 'availability_id');
