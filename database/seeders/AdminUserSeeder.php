@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
         $adminUser = User::create([
             'name' => 'Admin',
             'email' => 'admin@apiit.lk',
-            'password' => Hash::make('@dMiNof@p11t'), // Use a secure password in production
+            'password' => Hash::make('Admin123'), // Use a secure password in production
         ]);
 
         // Create a personal team for the admin user
