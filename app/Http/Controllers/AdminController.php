@@ -82,6 +82,10 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $skill = Skill::findOrFail($id);
+        $skill->users()->detach();
+
+        // Delete related courses if necessary
+        $skill->courses()->delete();
         $skill->delete();
 
         return redirect()->back()->with('success', 'Skill deleted successfully.');

@@ -74,6 +74,7 @@ class User extends Authenticatable
      {
          return $this->hasMany(UserRole::class);
      }
+     
  
      // Relationship to the Role model through UserRole
     //  public function roles()
