@@ -57,7 +57,15 @@ class RegisterController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users',
+            function ($attribute, $value, $fail) {
+                $allowedEmail = 'admin@apiit.lk'; // admin's email adress domain isnt students.apiit.lk 
+                $domain = 'students.apiit.lk';
+                
+                if ($value !== $allowedEmail && !str_ends_with($value, "@$domain")) {
+                    $fail("The $attribute must be an email address with the domain $domain.");
+                }
+            },],
             'password' => ['required', 'confirmed', 'min:8'],
            'availabilities' => ['required', 'array'], // Ensure availabilities are selected
         'availabilities.*' => ['exists:availabilities,id'], // Validate each ID existsts
