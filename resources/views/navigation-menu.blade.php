@@ -13,13 +13,18 @@
                 </div>
 
                 <!-- Navigation Links -->
+                
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-black font-bold">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(auth()->user()->hasRole('peer-student'))
                     <x-nav-link href="{{ route('teach') }}" :active="request()->routeIs('teach')">
                         {{ __('Teach') }}
                     </x-nav-link>
+                    @if(auth()->user()->hasRole('peer-tutor'))
+                    @endif
+                    @endif
                 </div>
             </div>
 
