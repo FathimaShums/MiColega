@@ -10,11 +10,23 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if(auth()->user()->hasRole('admin'))
                     <h2>Welcome Admin</h2>
+                    {{-- <div>
+                        <h3>All Proof Documents:</h3>
+                        <div>
+                            <h3>Pending Proof Documents:</h3>
+                            @foreach ($proofDocuments->where('status', 'pending') as $document)
+                            <!-- Display pending proof documents -->
+                        @endforeach
+                        </div>
+                    </div> --}}
+                    
 
-                    <div>
-                        <h3>Pending proof:</h3>
-                        <!-- Pending Proof Documents -->
-    @if (isset($proofDocuments) && $proofDocuments->count() > 0)
+                    
+            </div>
+        </div>
+    </div>
+    
+    {{-- @if (isset($proofDocuments) && $proofDocuments->count() > 0)
     
     <div>
         <h3>Pending Proof Documents:</h3>
@@ -39,7 +51,7 @@
     </div>
 @else
     <p>No pending proof documents.</p>
-@endif
+@endif --}}
 
                         @if (session('success'))
     <div class="mb-4 p-4 text-green-700 bg-green-100 rounded">

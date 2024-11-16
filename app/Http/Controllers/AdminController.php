@@ -16,11 +16,10 @@ class AdminController extends Controller
         $categories = Category::all();
         $skills = Skill::all();
         
-        // If needed, you can also pass proof documents to the index view
-        $proofDocuments = ProofDocument::where('status', 'pending')->with(['skill', 'user'])->get();
-    // Debugging: check the output of proof documents
-    dd($proofDocuments);
-        return view('admin.skills', compact('categories', 'skills', 'proofDocuments'));
+        $proofDocuments = ProofDocument::with(['skill', 'user'])->get();
+
+    // Remove the debugging line (dd)
+    return view('dashboard', compact('categories', 'skills', 'proofDocuments'));
     }
     
 

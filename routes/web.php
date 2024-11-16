@@ -4,6 +4,7 @@
 use App\Models\Skill;
 use App\Models\User; 
 use App\Models\Category;
+use App\Models\ProofDocument;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -34,30 +35,31 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         // Route::get('/dashboard', function () {
         //     return view('dashboard');
         // })->name('dashboard');
-
-
         Route::get('/dashboard', function () {
             // Eager load the roles for the authenticated $user = Auth::user()->load('roles');user
             // Return the view and pass the user data
             $categories = Category::all();
             $skills=Skill::all();
             $user = User::with('roles')->find(Auth::id());
-            return view('dashboard', compact('user','categories','skills'));
+            $proofDocuments = ProofDocument::all(); 
+            
+            return view('dashboard', compact('proofDocuments', 'user', 'categories', 'skills'));
 
             
         })->name('dashboard');
+        Route::get('/admin/skills', [AdminController::class, 'index'])->name('admin.skills.index');
+        Route::post('/admin/skills', [AdminController::class, 'store'])->name('admin.skills.store');
+        Route::delete('/admin/skills/{id}', [AdminController::class, 'destroy'])->name('admin.skills.destroy');
+    
+        // Route to show pending proof documents
+       // Route::get('/admin/pending-proof-documents', [AdminController::class, 'showPendingProofDocuments'])->name('admin.pending.proof.documents');
+        Route::put('/admin/proof-document/{id}', [AdminController::class, 'updateProofDocumentStatus'])->name('admin.proof.update');
+    // Route to show all proof documents
+    Route::get('/admin/pending-proof-documents', [AdminController::class, 'index'])->name('admin.pending.proof.documents');
+    
         // Update the /teach route to use the TeachController
         Route::get('/teach', [TeachController::class, 'index'])->name('teach');
         Route::post('/submit-skill-request', [TeachController::class, 'submitSkillRequest'])->name('submit.skill.request');
-
-        Route::get('/admin/skills', [AdminController::class, 'index'])->name('admin.skills.index');
-    Route::post('/admin/skills', [AdminController::class, 'store'])->name('admin.skills.store');
-    Route::delete('/admin/skills/{id}', [AdminController::class, 'destroy'])->name('admin.skills.destroy');
-
-    // Route to show pending proof documents
-    Route::get('/admin/pending-proof-documents', [AdminController::class, 'showPendingProofDocuments'])->name('admin.pending.proof.documents');
-    Route::put('/admin/proof-document/{id}', [AdminController::class, 'updateProofDocumentStatus'])->name('admin.proof.update');
-
     });
 //     Route::middleware(['auth', 'role:admin'])->group(function () {
 //         Route::get('/admin/skills', [AdminController::class, 'index'])->name('admin.skills.index');
