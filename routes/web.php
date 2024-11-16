@@ -61,33 +61,3 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/teach', [TeachController::class, 'index'])->name('teach');
         Route::post('/submit-skill-request', [TeachController::class, 'submitSkillRequest'])->name('submit.skill.request');
     });
-//     Route::middleware(['auth', 'role:admin'])->group(function () {
-//         Route::get('/admin/skills', [AdminController::class, 'index'])->name('admin.skills.index');
-//         Route::post('/admin/skills', [AdminController::class, 'store'])->name('admin.skills.store');
-//         Route::delete('/admin/skills/{id}', [AdminController::class, 'destroy'])->name('admin.skills.destroy');
-//         // Route to show pending proof documents
-// Route::get('/admin/pending-proof-documents', [AdminController::class, 'showPendingProofDocuments'])->name('admin.pending.proof.documents');
-
-// // Route to update proof document status
-// Route::put('/admin/proof-document/{id}', [AdminController::class, 'updateProofDocumentStatus'])->name('admin.proof.update');
-//     });
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/admin/skills', [AdminController::class, 'index'])->name('admin.skills.index');
-//     Route::post('/admin/skills', [AdminController::class, 'store'])->name('admin.skills.store');
-//     Route::delete('/admin/skills/{id}', [AdminController::class, 'destroy'])->name('admin.skills.destroy');
-
-//     // Route to show pending proof documents
-//     Route::get('/admin/pending-proof-documents', [AdminController::class, 'showPendingProofDocuments'])->name('admin.pending.proof.documents');
-
-//     // Route to update proof document status
-//     Route::put('/admin/proof-document/{id}', [AdminController::class, 'updateProofDocumentStatus'])->name('admin.proof.update');
-// });
-
-// // Group admin-specific routes
-// Route::middleware(['auth', RedirectIfNotAdmin::class]) // Removed 'web' middleware since it's implied
-//     ->prefix('admin') // Optional: Using prefix to clearly separate admin routes
-//     ->group(function () {
-//         Route::get('/dashboard', function () {
-//             return view('admin.dashboard');
-//         })->name('admin.dashboard');
-//     });
