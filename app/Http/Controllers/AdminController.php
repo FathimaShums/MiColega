@@ -51,7 +51,7 @@ class AdminController extends Controller
                     // If not, add the role
                     UserRole::create([
                         'user_id' => $userId,
-                        'role_id' => 2, // Role ID for peer-tutor
+                        'role_id' => 3, // Role ID for peer-tutor
                     ]);
                 }
             }
