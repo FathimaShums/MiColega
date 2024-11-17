@@ -13,6 +13,7 @@
                 
                 <!-- Available Skills Table -->
                 <h3 class="text-lg font-medium mb-4">Available Skills</h3>
+                <h5 class="text-lg font-medium mb-4 bg-red-200">If interested in teaching,please upload certificates recieved from  the relevant platform as proof</h5>
                 <table class="min-w-full bg-white border border-gray-300 rounded-lg">
                     <thead class="bg-gray-100">
                         <tr>
