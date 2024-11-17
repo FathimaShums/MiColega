@@ -8,6 +8,7 @@ use App\Models\ProofDocument;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LearnController;
 use App\Http\Controllers\TeachController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Middleware\RedirectIfNotAdmin;
@@ -42,8 +43,36 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             $skills=Skill::all();
             $user = User::with('roles')->find(Auth::id());
             $proofDocuments = ProofDocument::all(); 
+            // Retrieve the logged-in user's skills and availabilities
+    $userSkills = $user->skills->pluck('id');
+    $userAvailabilities = $user->availabilities->pluck('id');
+    $Alltutors = User::whereHas('roles', function($query) {
+        $query->where('RoleName', 'peer-tutor');
+    })
+    ->get();
+
+    // Find tutors who share at least one skill and one availability with the logged-in user
+    // $tutors = User::whereHas('roles', function($query) {
+    //     $query->where('RoleName', 'peer-tutor');
+    // })
+    // ->whereHas('skills', function($query) use ($userSkills) {
+    //     $query->whereIn('skill_id', $userSkills);
+    // })
+    // ->whereHas('proofDocuments', function ($query) use ($userSkills) {
+    //     $query->whereIn('skill_id', $userSkills)
+    //           ->where('status', 'approved'); // Check for approved status
+    // })
+    // ->get();
+    $tutors = User::whereHas('skills', function($query) use ($userSkills) {
+        $query->whereIn('skill_id', $userSkills);
+    })
+    ->whereHas('proofDocuments', function ($query) use ($userSkills) {
+        $query->whereIn('skill_id', $userSkills)
+              ->where('status', 'approved'); // Check for approved status
+    })
+    ->get();
             
-            return view('dashboard', compact('proofDocuments', 'user', 'categories', 'skills'));
+            return view('dashboard', compact('proofDocuments', 'user', 'categories', 'skills', 'tutors','Alltutors'));
 
             
         })->name('dashboard');
@@ -58,6 +87,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/admin/pending-proof-documents', [AdminController::class, 'index'])->name('admin.pending.proof.documents');
     
         // Update the /teach route to use the TeachController
+        
         Route::get('/teach', [TeachController::class, 'index'])->name('teach');
+Route::put('/teach/session-requests/{id}', [TeachController::class, 'updateSessionRequestStatus'])->name('session-request.update');
         Route::post('/submit-skill-request', [TeachController::class, 'submitSkillRequest'])->name('submit.skill.request');
+        Route::post('/tutors/request-session', [LearnController::class, 'requestSession'])->name('tutors.requestSession');
     });

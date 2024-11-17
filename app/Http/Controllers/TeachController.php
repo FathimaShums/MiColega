@@ -2,18 +2,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skill;
-use App\Models\ProofDocument;
 use App\Models\SkillRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ProofDocument;
+use App\Models\SessionRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeachController extends Controller
 {
     public function index()
     {
         $skills = Skill::withCount('users')->get();
-        return view('teach', compact('skills'));
+        // Fetch session requests where the logged-in user is the tutor
+        $sessionRequests = SessionRequest::where('tutor_id', Auth::id())->get();
+        return view('teach', compact('skills','sessionRequests'));
     }
 
     public function submitSkillRequest(Request $request)
@@ -44,4 +47,25 @@ class TeachController extends Controller
 
         return redirect()->route('teach')->with('success', 'Proof documents submitted successfully!');
     }
+    public function updateSessionRequestStatus(Request $request, $id)
+    {
+        $sessionRequest = SessionRequest::findOrFail($id);
+
+        // Ensure the logged-in user is the tutor for this request
+        if ($sessionRequest->tutor_id != Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Validate the status input
+        $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        // Update the status
+        $sessionRequest->status = $request->status;
+        $sessionRequest->save();
+
+        return redirect()->route('teach')->with('success', 'Session request status updated successfully!');
+    }
+    
 }

@@ -141,6 +141,55 @@
 
                 @else
                     <h1>Recommended Tutors for you:</h1>
+                    <div class="container">
+                        <h1>Dashboard</h1>
+                    
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                    
+                        <h2>Available Tutors</h2>
+                        @foreach($tutors as $tutor)
+                            <div class="mb-4 p-4 border rounded">
+                                <p><strong>Name:</strong> {{ $tutor->name }}</p>
+                                <p><strong>Email:</strong> {{ $tutor->email }}</p>
+                    
+                                <form action="{{ route('tutors.requestSession') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="tutor_id" value="{{ $tutor->id }}">
+                                    <label for="skill_id">Select Skill:</label>
+                                    <select name="skill_id" id="skill_id" class="border rounded p-2">
+                                        @foreach($skills as $skill)
+                                            <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="bg-blue-500 px-4 py-2 rounded">Request Session</button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <h2>All Tutors</h2>
+    @foreach($Alltutors as $Alltutor)
+        <div class="mb-4 p-4 border rounded">
+            <p><strong>Name:</strong> {{ $Alltutor->name }}</p>
+            <p><strong>Email:</strong> {{ $Alltutor->email }}</p>
+
+            <form action="{{ route('tutors.requestSession') }}" method="POST">
+                @csrf
+                <input type="hidden" name="tutor_id" value="{{ $Alltutor->id }}">
+                <label for="skill_id">Select Skill:</label>
+                <select name="skill_id" id="skill_id" class="border rounded p-2">
+                    @foreach($skills as $skill)
+                        <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="bg-blue-500 px-4 py-2 rounded">Request Session</button>
+            </form>
+        </div>
+    @endforeach
                 @endif
             </div>
         </div>
