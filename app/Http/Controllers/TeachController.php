@@ -16,7 +16,13 @@ class TeachController extends Controller
         $skills = Skill::withCount('users')->get();
         // Fetch session requests where the logged-in user is the tutor
         $sessionRequests = SessionRequest::where('tutor_id', Auth::id())->get();
-        return view('teach', compact('skills','sessionRequests'));
+        // Fetch approved skills for the logged-in user
+    $approvedSkills = ProofDocument::where('user_id', Auth::id())
+    ->where('status', 'approved')
+    ->with('skill') // Eager load the associated skill
+    ->get()
+    ->pluck('skill'); // Extract only the skills
+        return view('teach', compact('skills','sessionRequests','approvedSkills'));
     }
 
     public function submitSkillRequest(Request $request)
