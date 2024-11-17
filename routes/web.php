@@ -53,14 +53,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
  
     $tutors = User::whereHas('skills', function($query) use ($userSkills) {
-        $query->whereIn('skill_id', $userSkills);
+        $query->whereIn('skills.id', $userSkills); // Specify table name for skills
     })
-    ->whereHas('proofDocuments', function ($query) use ($userSkills) {
-        $query->whereIn('skill_id', $userSkills)
-              ->where('status', 'approved'); // Check for approved status
+    ->whereHas('availabilities', function($query) use ($userAvailabilities) {
+        $query->whereIn('availabilities.id', $userAvailabilities); // Specify table name for availabilities
     })
-    ->where('id', '!=', Auth::id()) // Exclude the logged-in user
+    //->where('users.id', '!=', Auth::id()) // Exclude the logged-in user
+    ->with('availabilities') // Eager-load availabilities
     ->get();
+    
+
             
             return view('dashboard', compact('proofDocuments', 'user', 'categories', 'skills', 'tutors','Alltutors'));
 

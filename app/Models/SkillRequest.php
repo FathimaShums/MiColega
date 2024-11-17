@@ -9,7 +9,7 @@ class SkillRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'status'];
+    protected $fillable = ['user_id', 'status', 'availability_id'];
 
     public function user()
     {
@@ -20,4 +20,8 @@ class SkillRequest extends Model
     {
         return $this->hasMany(ProofDocument::class);
     }
+    public function availability()
+{
+    return $this->belongsTo(Availability::class);
+}
 }
