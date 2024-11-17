@@ -9,12 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if(auth()->user()->hasRole('admin'))
-                    <h2>Welcome Admin</h2>
+                    
                     @foreach($proofDocuments as $proofDocument)
     <!-- Access properties of $proofDocument here -->
 @endforeach
                     <div>
-                        <h3>Pending documents:</h3>
+                        <h3>Pending Requests for tutoring:</h3>
                         @foreach ($proofDocuments->where('status', 'pending') as $document)
                         <div class="mb-4 p-4 border rounded">
                             <p><strong>Skill:</strong> {{ $document->skill->name }}</p>
@@ -142,7 +142,7 @@
                 @else
                     <h1>Recommended Tutors for you:</h1>
                     <div class="container">
-                        <h1>Dashboard</h1>
+                        
                     
                         @if(session('success'))
                             <div class="alert alert-success">
@@ -150,7 +150,7 @@
                             </div>
                         @endif
                     
-                        <h2>Available Tutors</h2>
+                        
                         @foreach($tutors as $tutor)
                             <div class="mb-4 p-4 border rounded">
                                 <p><strong>Name:</strong> {{ $tutor->name }}</p>
@@ -171,25 +171,7 @@
                         @endforeach
                     </div>
 
-                    <h2>All Tutors</h2>
-    @foreach($Alltutors as $Alltutor)
-        <div class="mb-4 p-4 border rounded">
-            <p><strong>Name:</strong> {{ $Alltutor->name }}</p>
-            <p><strong>Email:</strong> {{ $Alltutor->email }}</p>
-
-            <form action="{{ route('tutors.requestSession') }}" method="POST">
-                @csrf
-                <input type="hidden" name="tutor_id" value="{{ $Alltutor->id }}">
-                <label for="skill_id">Select Skill:</label>
-                <select name="skill_id" id="skill_id" class="border rounded p-2">
-                    @foreach($skills as $skill)
-                        <option value="{{ $skill->id }}">{{ $skill->name }}</option>
-                    @endforeach
-                </select>
-                <button type="submit" class="bg-blue-500 px-4 py-2 rounded">Request Session</button>
-            </form>
-        </div>
-    @endforeach
+                    
                 @endif
             </div>
         </div>
