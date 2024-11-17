@@ -51,18 +51,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })
     ->get();
 
-    // Find tutors who share at least one skill and one availability with the logged-in user
-    // $tutors = User::whereHas('roles', function($query) {
-    //     $query->where('RoleName', 'peer-tutor');
-    // })
-    // ->whereHas('skills', function($query) use ($userSkills) {
-    //     $query->whereIn('skill_id', $userSkills);
-    // })
-    // ->whereHas('proofDocuments', function ($query) use ($userSkills) {
-    //     $query->whereIn('skill_id', $userSkills)
-    //           ->where('status', 'approved'); // Check for approved status
-    // })
-    // ->get();
+ 
     $tutors = User::whereHas('skills', function($query) use ($userSkills) {
         $query->whereIn('skill_id', $userSkills);
     })
