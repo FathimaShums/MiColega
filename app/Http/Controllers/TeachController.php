@@ -28,18 +28,22 @@ class TeachController extends Controller
     public function submitSkillRequest(Request $request)
     {
         // Validate the request data
-        $request->validate([
-            'proof.*' => 'required|file|mimes:pdf,jpg,png|max:2048',
-            'skill_id' => 'required|array',
-            'skill_id.*' => 'exists:skills,id',
-        ]);
+    $request->validate([
+        'proof.*' => 'required|file|mimes:pdf,jpg,png|max:2048',
+        'skill_id' => 'required|array',
+        'skill_id.*' => 'exists:skills,id',
+        'proof' => 'required|array|min:1',
+        'proof.required' => 'Please select at least one proof document to upload.',  // Custom message
+        'proof.min' => 'You must select at least one proof document.',  // Custom message  // Ensure at least one proof is selected
+    ]);
 
-        // Create a new SkillRequest
-        $skillRequest = SkillRequest::create([
-            'user_id' => Auth::id(),
-        ]);
+    // Create a new SkillRequest
+    $skillRequest = SkillRequest::create([
+        'user_id' => Auth::id(),
+    ]);
 
-        // Loop through uploaded files and save them
+    // Only loop through if there are proof files
+    if ($request->hasFile('proof')) {
         foreach ($request->file('proof') as $index => $file) {
             $path = $file->store('proof_documents');
 
@@ -50,6 +54,7 @@ class TeachController extends Controller
                 'skill_request_id' => $skillRequest->id,
             ]);
         }
+    }
 
         return redirect()->route('teach')->with('success', 'Proof documents submitted successfully!');
     }

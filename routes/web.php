@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         $query->whereIn('skill_id', $userSkills)
               ->where('status', 'approved'); // Check for approved status
     })
+    ->where('id', '!=', Auth::id()) // Exclude the logged-in user
     ->get();
             
             return view('dashboard', compact('proofDocuments', 'user', 'categories', 'skills', 'tutors','Alltutors'));

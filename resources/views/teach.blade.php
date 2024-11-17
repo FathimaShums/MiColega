@@ -49,6 +49,11 @@
                     <div class="mb-6">
                         <label for="proof" class="block text-sm font-medium text-gray-700">Proof Files</label>
                         <input type="file" name="proof[]" id="proof" class="mt-2 block w-full border border-gray-300 rounded-md p-2" multiple>
+                        
+                        <!-- Display error message for proof field -->
+                        @error('proof')
+                            <span class="text-red-500 text-sm mt-2">{{ $message }}</span>
+                        @enderror
                     </div>
                     @foreach ($skills as $skill)
                         <input type="hidden" name="skill_id[]" value="{{ $skill->id }}">
@@ -65,22 +70,22 @@
             </div>
         </div>
 
-       <!-- Approved Skills Section -->
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-8">
-    <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-6">
-        <h2 class="text-2xl font-semibold mb-6">Approved Skills</h2>
-        
-        @if($approvedSkills->isEmpty())
-            <p class="text-gray-600">You have no approved skills to teach yet.</p>
-        @else
-            <ul class="list-disc pl-6">
-                @foreach($approvedSkills as $skill)
-                    <li class="text-gray-600">{{ $skill->name }}</li> <!-- Assuming the Skill model has a 'name' attribute -->
-                @endforeach
-            </ul>
-        @endif
-    </div>
-</div>
+        <!-- Approved Skills Section -->
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-8">
+            <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-6">Approved Skills</h2>
+                
+                @if($approvedSkills->isEmpty())
+                    <p class="text-gray-600">You have no approved skills to teach yet.</p>
+                @else
+                    <ul class="list-disc pl-6">
+                        @foreach($approvedSkills as $skill)
+                            <li class="text-gray-600">{{ $skill->name }}</li> <!-- Assuming the Skill model has a 'name' attribute -->
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        </div>
 
         <!-- Session Requests Section -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
