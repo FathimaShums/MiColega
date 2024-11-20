@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
         User::factory()->withPersonalTeam()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            $this->call(RoleSeeder::class),
+            $this->call(AdminUserSeeder::class),
+            $this->call(AvailabilitySeeder::class),
+            $this->call(CategorySeeder::class),
+            $this->call(SkillsTableSeeder::class),
         ]);
     }
 }
