@@ -52,14 +52,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     ->get();
 
  
-    $tutors = User::whereHas('skills', function($query) use ($userSkills) {
-        $query->whereIn('skills.id', $userSkills); // Specify table name for skills
+    $tutors = User::whereHas('proofDocuments', function ($query) use ($userSkills) {
+        $query->where('status', 'approved') // ProofDocument must be approved
+              ->whereIn('skill_id', $userSkills); // Match user's skills
     })
-    ->whereHas('availabilities', function($query) use ($userAvailabilities) {
-        $query->whereIn('availabilities.id', $userAvailabilities); // Specify table name for availabilities
+    ->whereHas('roles', function ($query) {
+        $query->where('RoleName', 'peer-tutor'); // Ensure they have the peer-tutor role
     })
-    //->where('users.id', '!=', Auth::id()) // Exclude the logged-in user
-    ->with('availabilities') // Eager-load availabilities
+    ->where('id', '!=', Auth::id()) // Exclude the logged-in user
+    ->with(['availabilities' => function ($query) {
+        $query->distinct('time'); // Ensure distinct availabilities
+    }]) // Eager load availabilities
     ->get();
     
 
